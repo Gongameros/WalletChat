@@ -5,7 +5,7 @@ kbCommands = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 keyBtn1= KeyboardButton('Help')
 keyBtn2= KeyboardButton('About')
 keyBtn3= KeyboardButton('Subscriptions')
-keyBtn4= KeyboardButton('Adresses')
+keyBtn4= KeyboardButton('Addresses')
 kbCommands.add(keyBtn1,keyBtn2,keyBtn3,keyBtn4)
 
 ikbSubscriptions = InlineKeyboardMarkup(row_width = 1)

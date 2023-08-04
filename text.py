@@ -24,3 +24,7 @@ ABOUT_COMMAND = """
 <b>It is a crypto wallet checker</b>
 
 """
+
+ADDRESSES_DENIED = """
+<b>You don`t have permissions, buy one of the tier subscription.</b>
+"""
