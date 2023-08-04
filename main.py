@@ -6,7 +6,7 @@ import ssl
 from config import TOKEN_API
 from keyBoards import kbCommands, ikbSubscriptions, ikbFAQ
 from text import ABOUT_TIERS_COMMAND ,FAQ_COMMAND , HELP_COMMAND, ABOUT_COMMAND
-# from dbConnection import create_table, insert_person, get_tier_status
+from dbConnection import create_table, insert_person, get_tier_status
 
 bot = Bot(TOKEN_API)
 dp = Dispatcher(bot)
@@ -16,8 +16,8 @@ async def start_command(message: types.Message):
     await bot.send_message(chat_id = message.from_user.id,
                            text = 'Welcome to Crypto Checker',
                            reply_markup = kbCommands)
-    
-    # insert_person(message.from_user.id)
+    USER_ID = message.from_user.id
+    insert_person(USER_ID)
     await message.delete()
 
 
@@ -40,11 +40,10 @@ async def about_command(message: types.Message):
 
 @dp.message_handler(Text(equals = "Addresses"))
 async def address_command(message: types.Message):
-    # if get_tier_status(message.from_user.id) == 0:
-    #     await message.answer(chat_id = message.from_user.id, text= """
-    #                          <b>You don`t have permissions, buy one of the tier subscription.</b>
-    #                          """, parse_mode='HTML')
-    #     return
+    if get_tier_status(message.from_user.id) == 0:
+        await bot.send_message(chat_id = message.from_user.id, text= "<b>You don`t have permissions, buy one of the tier subscription.</b>",
+                              parse_mode='HTML')
+        return
     await message.answer(text="Send addresses")
     dp.register_message_handler(addresses_comp, content_types=types.ContentTypes.TEXT)
 

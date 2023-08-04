@@ -4,7 +4,6 @@ def create_table():
     conn = sqlite3.connect('WalletChat.db')
     cursor = conn.cursor()
 
-    # SQL command to create the table
     create_table_sql = '''
     CREATE TABLE IF NOT EXISTS person (
     ID INTEGER PRIMARY KEY,
@@ -24,7 +23,7 @@ def insert_person(id):
     select_sql = '''
     SELECT ID FROM person WHERE ID = ?
     '''
-    cursor.execute(select_sql, id)
+    cursor.execute(select_sql, (id,))
     existing_id = cursor.fetchone()
 
     if existing_id is not None:
@@ -33,7 +32,7 @@ def insert_person(id):
         insert_sql = '''
         INSERT INTO person (ID) VALUES (?)
         '''
-        cursor.execute(insert_sql, id)
+        cursor.execute(insert_sql, (id,))
         conn.commit()
 
     conn.close()
@@ -47,14 +46,12 @@ def get_tier_status(id):
     SELECT TIERS FROM person WHERE ID = ?
     '''
 
-    cursor.execute(select_sql, id)
+    cursor.execute(select_sql, (id,))
     result = cursor.fetchone()
-
+    conn.close()
     if result is not None:
         status = result[0]
-        conn.close()
         return status
     else:
-        conn.close()
         return None
     
